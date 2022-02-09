@@ -9,7 +9,7 @@ const Input = styled.input`
   color: inherit;
   margin-top: 20px;
   width: 100%;
-  // TODO border color
+  border: 2px solid rgb(116, 116, 116);
 `;
 
 export default Input;
