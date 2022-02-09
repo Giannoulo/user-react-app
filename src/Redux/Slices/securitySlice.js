@@ -8,8 +8,8 @@ export const securitySlice = createSlice({
     loading: false,
   },
   reducers: {
-    login: (state, payload) => {
-      state.token = payload;
+    login: (state, action) => {
+      state.token = action.payload;
       state.loading = false;
     },
     logout: (state) => {
