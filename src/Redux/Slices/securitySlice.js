@@ -27,12 +27,12 @@ export const securitySelector = (state) => state.security;
 export const { login, logout, loading } = securitySlice.actions;
 export default securitySlice.reducer;
 
+// Thunks
 export function userLogin(email, password) {
   return async (dispatch) => {
     dispatch(loading());
     try {
       const response = await reqresInstance.post("/login", { email: email, password: password });
-      console.log(response);
       dispatch(login(response.data.token));
       localStorage.setItem("token", response.data.token);
     } catch (error) {

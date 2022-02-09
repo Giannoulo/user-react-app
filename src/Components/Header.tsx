@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Button from "./UI/Button";
 
-import { logout } from "../Redux/Slices/securitySlice";
+import { userLogout } from "../Redux/Slices/securitySlice";
 import { useDispatch } from "react-redux";
 
 const Container = styled.div`
@@ -11,13 +11,13 @@ const Container = styled.div`
   padding: 10px;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 `;
 
 const Header = () => {
   const dispatch = useDispatch();
   const handleLogoutClick = () => {
-    console.log("yo");
-    dispatch(logout());
+    dispatch(userLogout());
   };
 
   return (

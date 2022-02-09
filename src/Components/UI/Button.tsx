@@ -4,10 +4,11 @@ const Button = styled.button`
   border-radius: 20px;
   font-size: 1rem;
   height: 2rem;
-  padding: 5px 40px;
+  width: fit-content;
+  padding: 5px 50px;
   background-color: #fff;
   color: inherit;
-  // TODO border color
+  // TODO border color, background color
 `;
 
 export default Button;
