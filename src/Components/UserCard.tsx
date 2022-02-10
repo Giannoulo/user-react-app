@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import {Link} from "react-router-dom";
+import {setUser} from "../Redux/Slices/userSlice";
+import {useDispatch} from "react-redux";
 
 export interface User {
   id: number;
@@ -9,11 +12,7 @@ export interface User {
   email: string;
 }
 
-type Props = {
-  user: User;
-};
-
-const Container = styled.div`
+const StyledLink = styled(Link)`
   height: 150px;
   width: 100%;
   margin-top: 25px;
@@ -40,17 +39,21 @@ const Details = styled.div`
     color: #242424;
   }
 `;
-const UserCard = ({ user: { id, avatar, first_name, last_name, email } }: Props) => {
+const UserCard = ({user}: {user: User}) => {
+  const dispatch = useDispatch();
+  const handleUserClick = (user: User) => {
+    dispatch(setUser(user));
+  };
   return (
-    <Container>
-      <Avatar src={avatar} />
+    <StyledLink to="/user" onClick={() => handleUserClick(user)}>
+      <Avatar src={user.avatar} />
       <Details>
         <span>
-          {first_name} {last_name}
+          {user.first_name} {user.last_name}
         </span>
-        <span>{email}</span>
+        <span>{user.email}</span>
       </Details>
-    </Container>
+    </StyledLink>
   );
 };
 

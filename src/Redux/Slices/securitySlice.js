@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { reqresInstance } from "../../API/axiosConfig";
+import {createSlice} from "@reduxjs/toolkit";
+import {reqresInstance} from "../../API/axiosConfig";
 
 export const securitySlice = createSlice({
   name: "security",
@@ -16,26 +16,30 @@ export const securitySlice = createSlice({
       state.token = null;
       state.loading = false;
     },
-    loading: (state) => {
-      state.loading = true;
+    loading: (state, action) => {
+      state.loading = action.payload;
     },
   },
 });
 
-// Export selectors,actions,reducer
+// Export selector,actions,reducer
 export const securitySelector = (state) => state.security;
-export const { login, logout, loading } = securitySlice.actions;
+export const {login, logout, loading} = securitySlice.actions;
 export default securitySlice.reducer;
 
 // Thunks
-export function userLogin(email, password) {
+export function userLogin(userEmail, userPassword) {
   return async (dispatch) => {
-    dispatch(loading());
+    dispatch(loading(true));
     try {
-      const response = await reqresInstance.post("/login", { email: email, password: password });
+      const response = await reqresInstance.post("/login", {
+        email: userEmail,
+        password: userPassword,
+      });
       dispatch(login(response.data.token));
       localStorage.setItem("token", response.data.token);
     } catch (error) {
+      dispatch(loading(false));
       alert(error);
     }
   };
@@ -43,8 +47,9 @@ export function userLogin(email, password) {
 
 export function userLogout() {
   return (dispatch) => {
-    dispatch(loading());
+    dispatch(loading(true));
     localStorage.removeItem("token");
     dispatch(logout());
+    dispatch(loading(false));
   };
 }
