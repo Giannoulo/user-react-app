@@ -19,6 +19,7 @@ const StyledLink = styled(Link)`
   border: 2px solid rgb(116, 116, 116);
   border-radius: 10px;
   display: flex;
+  text-decoration: none;
 `;
 
 const Avatar = styled.img`
