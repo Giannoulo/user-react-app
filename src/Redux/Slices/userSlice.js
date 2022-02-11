@@ -1,5 +1,5 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {reqresInstance} from "../../API/axiosConfig";
+import { createSlice } from "@reduxjs/toolkit";
+import { reqresInstance } from "../../API/axiosConfig";
 
 export const userSlice = createSlice({
   name: "users",
@@ -21,6 +21,7 @@ export const userSlice = createSlice({
       state.user = action.payload;
       state.loading = false;
     },
+    // TODO Add Spinner
     loading: (state, action) => {
       state.loading = action.payload;
     },
@@ -29,7 +30,7 @@ export const userSlice = createSlice({
 
 // Export selectors,actions,reducer
 export const userSelector = (state) => state.users;
-export const {setUserList, setTotalPages, setUser, loading} = userSlice.actions;
+export const { setUserList, setTotalPages, setUser, loading } = userSlice.actions;
 export default userSlice.reducer;
 
 export function getUserList(page) {
@@ -37,7 +38,7 @@ export function getUserList(page) {
     dispatch(loading(true));
     try {
       const response = await reqresInstance.get(`/users?page=${page}`);
-      const {users} = getState();
+      const { users } = getState();
       if (page === 1) {
         dispatch(setUserList(response.data.data));
         dispatch(setTotalPages(response.data.total_pages));

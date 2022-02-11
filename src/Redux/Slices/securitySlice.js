@@ -1,5 +1,5 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {reqresInstance} from "../../API/axiosConfig";
+import { createSlice } from "@reduxjs/toolkit";
+import { reqresInstance } from "../../API/axiosConfig";
 
 export const securitySlice = createSlice({
   name: "security",
@@ -14,8 +14,8 @@ export const securitySlice = createSlice({
     },
     logout: (state) => {
       state.token = null;
-      state.loading = false;
     },
+    // TODO Add Spinner
     loading: (state, action) => {
       state.loading = action.payload;
     },
@@ -24,7 +24,7 @@ export const securitySlice = createSlice({
 
 // Export selector,actions,reducer
 export const securitySelector = (state) => state.security;
-export const {login, logout, loading} = securitySlice.actions;
+export const { login, logout, loading } = securitySlice.actions;
 export default securitySlice.reducer;
 
 // Thunks
@@ -47,9 +47,7 @@ export function userLogin(userEmail, userPassword) {
 
 export function userLogout() {
   return (dispatch) => {
-    dispatch(loading(true));
     localStorage.removeItem("token");
     dispatch(logout());
-    dispatch(loading(false));
   };
 }
