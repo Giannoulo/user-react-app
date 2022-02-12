@@ -8,3 +8,4 @@ Notes:
    Need to persist(stringify and store in localstorage like the token) all of the redux state in order to avoid that
 4. The intersection Observer on UserList component has a bug on reload.
 5. Some types are missing
+6. Disable login button on empty fields missing
