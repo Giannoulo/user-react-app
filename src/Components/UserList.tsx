@@ -6,6 +6,7 @@ import SearchUsers from "./SearchUsers";
 
 import {useDispatch, useSelector} from "react-redux";
 import {getUserList, userSelector} from "../Redux/Slices/userSlice";
+import {Link} from "react-router-dom";
 
 const Container = styled.div`
   height: 100%;
@@ -17,6 +18,10 @@ const Container = styled.div`
     width: 800px;
   }
 `;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
 
 const TargetDiv = styled.div`
   min-height: 30px;
@@ -27,7 +32,9 @@ const UserList = () => {
 
   const dispatch = useDispatch();
   const {userList} = useSelector(userSelector);
-  const [usersSJSX, setUsersSJSX] = useState(null);
+  const [usersJSX, setUsersJSX] = useState<JSX.Element[]>([]);
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Get more pages on each intersection
   useEffect(() => {
@@ -36,11 +43,23 @@ const UserList = () => {
 
   // Keep the rendered cards updated
   useEffect(() => {
-    const userCards = userList.map((user: User) => {
-      return <UserCard user={user} key={user.id} />;
-    });
-    setUsersSJSX(userCards);
-  }, [userList]);
+    const userCards: JSX.Element[] = [];
+    for (let i = 0; i < userList.length; i++) {
+      // Filter results
+      if (searchTerm.length === 0) {
+        userCards.push(<UserCard user={userList[i]} key={userList[i].id} />);
+      } else {
+        if (
+          userList[i].first_name.includes(searchTerm) ||
+          userList[i].last_name.includes(searchTerm) ||
+          userList[i].email.includes(searchTerm)
+        ) {
+          userCards.push(<UserCard user={userList[i]} key={userList[i].id} />);
+        }
+      }
+    }
+    setUsersJSX(userCards);
+  }, [userList, searchTerm]);
 
   // Add an intersection observer to target-div on mount
   useEffect(() => {
@@ -63,12 +82,13 @@ const UserList = () => {
       };
     }
   }, []);
-
   return (
     <Container>
-      <Button>ADD NEW USER</Button>
-      <SearchUsers />
-      {usersSJSX}
+      <StyledLink to="/user">
+        <Button>ADD NEW USER</Button>
+      </StyledLink>
+      <SearchUsers setSearchTerm={setSearchTerm} />
+      {usersJSX}
       <TargetDiv ref={targetDivRef} key="target-div" />
     </Container>
   );

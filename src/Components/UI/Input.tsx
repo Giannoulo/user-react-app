@@ -10,6 +10,10 @@ const Input = styled.input`
   margin-top: 20px;
   width: 100%;
   border: 2px solid rgb(116, 116, 116);
+  &::placeholder {
+    font-size: 0.8rem;
+    color: rgb(150, 150, 150);
+  }
 `;
 
 export default Input;
